@@ -1,24 +1,37 @@
 import 'package:flutter/widgets.dart';
-
 import 'package:flutter/material.dart';
+
+import './question.dart';
+import './answer.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  var questionIndex = 0;
+class MyApp extends StatefulWidget { 
+  @override
+  _MyAppState createState() => _MyAppState();
+}
 
-  void answerQuestions() {
-    questionIndex = questionIndex + 1;
-    print('Answer chosen!');
+class _MyAppState extends State<MyApp> {
+  var _questionIndex = 0;
+
+  void _answerQuestions() {
+    setState(() {
+    _questionIndex = _questionIndex + 1;
+    });
+    print(_questionIndex);
   }
 
   @override
   Widget build(BuildContext context) {
     var questions = [
-      'What\'s your favorite color?',
-      'What\'s your favorite animal?'
+      {'questionText': 'What\'s your favorite color?', 'answers': ['Black','Green','White'],},
+
+      {'questionText': 'What\'s your favorite animal?', 'answers': ['Rabbit','Spider','Eagle','Vulture','Lion'],},
+
+      {'questionText': 'Who is your favourite instructor?', 'answers': ['Brad','Spider','Max','Colt','Angela'],},
+      
     ];
     return MaterialApp(
       home: Scaffold(
@@ -27,22 +40,10 @@ class MyApp extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Text(questions[0]),
-            ElevatedButton(
-              child: Text('Answer 1'),
-              onPressed: answerQuestions,
-            ),
-            ElevatedButton(
-              child: Text('Answer 2'),
-              onPressed: () => print('Answer 2 chosen'),
-            ),
-            ElevatedButton(
-              child: Text('Answer 3'),
-              onPressed: () {
-                //...
-                print('Answer 3 chosen');
-              },
-            ),
+            Question(questions[_questionIndex],),
+            Answer(_answerQuestions),
+            Answer(_answerQuestions),
+            Answer(_answerQuestions),
           ],
         ),
       ),
